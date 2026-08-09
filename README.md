@@ -7,6 +7,7 @@
 
 <p align="center">
   <a href="https://github.com/mondalbedantika/hourforge"><img src="https://img.shields.io/badge/GitHub-HourForge-181717?style=for-the-badge&logo=github" alt="HourForge on GitHub" /></a>
+  <a href="https://hourforge.vercel.app/"><img src="https://img.shields.io/badge/Live%20Demo-Visit%20HourForge-000000?style=for-the-badge&logo=vercel" alt="Visit the live HourForge demo" /></a>
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1020" alt="React 19" />
   <img src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 8" />
@@ -14,6 +15,10 @@
 </p>
 
 > **🎯 The idea:** less browsing, more progress. HourForge helps learners find quality technical resources and turns them into a structured, hands-on 60-minute learning session.
+
+## 🌐 Live demo
+
+Try HourForge in your browser: **[hourforge.vercel.app](https://hourforge.vercel.app/)**
 
 ## ✨ What makes it useful
 
