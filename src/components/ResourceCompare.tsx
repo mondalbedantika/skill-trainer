@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, GraduationCap, BookOpen, Sparkles, Check, X } from 'lucide-react';
+import { Play, GraduationCap, BookOpen, Sparkles } from 'lucide-react';
 
 interface ResourceCompareProps {
   skillName: string;
@@ -14,7 +14,7 @@ export const ResourceCompare: React.FC<ResourceCompareProps> = ({ skillName, mat
     <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-surface-border space-y-6">
       
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-950 text-primary-300 border border-primary-800 text-xs font-mono font-bold mb-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-low text-primary border border-primary/40 text-xs font-mono font-bold mb-2">
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           <span>SIDE-BY-SIDE MATRIX</span>
         </div>

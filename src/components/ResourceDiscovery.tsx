@@ -2,29 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { 
   Filter, 
   Search, 
-  Sparkles, 
-  ArrowUpDown,
-  Check
+  ArrowUpDown
 } from 'lucide-react';
-import type { Resource } from '../types';
 import { ResourceCard } from './common/ResourceCard';
 import { EmptyState } from './common/EmptyState';
+import { useLearning } from '../context/LearningContext';
 
-interface ResourceDiscoveryProps {
-  resources: Resource[];
-  onSelectResource: (resource: Resource) => void;
-  onStartOneHour: (skillName: string) => void;
-  onSaveResource: (resourceId: string) => void;
-  savedResourceIds: string[];
-}
-
-export const ResourceDiscovery: React.FC<ResourceDiscoveryProps> = ({
-  resources,
-  onSelectResource,
-  onStartOneHour,
-  onSaveResource,
-  savedResourceIds
-}) => {
+export const ResourceDiscovery: React.FC = () => {
+  const { resources, setSelectedDetailResource, startOneHour, toggleSavedResource, savedResourceIds } = useLearning();
   const [queryInput, setQueryInput] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [platformFilter, setPlatformFilter] = useState<string>('ALL');
@@ -84,7 +69,7 @@ export const ResourceDiscovery: React.FC<ResourceDiscoveryProps> = ({
       {/* ── Page Header & Main Search Input ── */}
       <div className="space-y-4">
         <div>
-          <span className="label-mono text-primary-400 mb-1 block">Curated Resource Aggregator</span>
+          <span className="label-mono text-primary mb-1 block">Curated Resource Aggregator</span>
           <h1 className="text-3xl sm:text-4xl font-semibold text-text-primary tracking-tight">Discover what to learn.</h1>
           <p className="text-sm text-text-muted mt-1">
             Intelligently ranked technical tutorials and courses from YouTube, Coursera, and Udemy.
@@ -93,7 +78,7 @@ export const ResourceDiscovery: React.FC<ResourceDiscoveryProps> = ({
 
         {/* Discovery Search Bar */}
         <div className="max-w-2xl">
-          <div className="relative flex items-center p-1 rounded-xl glass-panel border border-surface-border focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20 transition-all">
+          <div className="relative flex items-center p-1 rounded-xl glass-panel border border-surface-border focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
             <Search className="w-5 h-5 text-text-muted ml-3 mr-2" />
             <input
               type="text"
@@ -120,7 +105,7 @@ export const ResourceDiscovery: React.FC<ResourceDiscoveryProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           
           <div className="flex items-center gap-1.5 label-mono text-text-muted pr-2 border-r border-surface-border">
-            <Filter className="w-3.5 h-3.5 text-primary-400" />
+            <Filter className="w-3.5 h-3.5 text-primary" />
             <span>Filters:</span>
           </div>
 
@@ -219,9 +204,9 @@ export const ResourceDiscovery: React.FC<ResourceDiscoveryProps> = ({
               key={resource.id}
               resource={resource}
               isSaved={savedResourceIds.includes(resource.id)}
-              onSaveResource={onSaveResource}
-              onSelectResource={onSelectResource}
-              onStartOneHour={onStartOneHour}
+              onSaveResource={toggleSavedResource}
+              onSelectResource={setSelectedDetailResource}
+              onStartOneHour={startOneHour}
             />
           ))}
         </div>

@@ -37,17 +37,15 @@ export default {
           DEFAULT: 'var(--color-primary)',
           container: 'var(--color-primary-container)',
           brand: 'var(--color-primary-brand)', 
-          
-          // Legacy mappings for backward compatibility
-          300: 'var(--color-primary)',
-          400: 'var(--color-primary)', 
-          500: 'var(--color-primary-container)', 
-          600: 'var(--color-primary)', 
-          800: 'var(--color-primary-container)', 
-          950: 'var(--color-on-primary)', 
         },
         // Top-level alias so @apply bg-primary-brand works
         'primary-brand': 'var(--color-primary-brand)',
+        accent: {
+          warning: 'var(--color-accent-warning)',
+          success: 'var(--color-accent-success)',
+          danger: 'var(--color-accent-danger)',
+          info: 'var(--color-accent-info)',
+        },
         'on-primary': {
           DEFAULT: 'var(--color-on-primary)',
           container: 'var(--color-on-primary-container)',
@@ -101,6 +99,7 @@ export default {
       boxShadow: {
         'level-2': 'var(--shadow-level-2)',
         'ai-glow': 'var(--shadow-ai-glow)',
+        'glow-primary': '0 0 20px rgba(99, 102, 241, 0.35)',
       },
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Target, Clock, Zap, Check } from 'lucide-react';
+import { X, Sparkles, Check } from 'lucide-react';
 import { UserGoals, PrimaryGoal, SkillLevel, TimeCommitment } from '../types';
+import { useDialogAccessibility } from './common/useDialogAccessibility';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   userGoals,
   onSaveGoals
 }) => {
+  const dialogRef = useDialogAccessibility(isOpen, onClose);
   const [goal, setGoal] = useState<PrimaryGoal>(userGoals.primaryGoal);
   const [level, setLevel] = useState<SkillLevel>(userGoals.currentLevel);
   const [time, setTime] = useState<TimeCommitment>(userGoals.availableTime);
@@ -43,14 +45,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-fadeIn">
       
-      <div className="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="learning-goals-title" className="glass-panel w-full max-w-2xl rounded-3xl border border-surface-border shadow-2xl p-6 sm:p-8 space-y-6">
         
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center justify-between border-b border-surface-border pb-4">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-300" />
-            <h2 className="text-xl font-bold text-text-primary">Personalize Your Learning Goals</h2>
+            <h2 id="learning-goals-title" className="text-xl font-bold text-text-primary">Personalize Your Learning Goals</h2>
           </div>
-          <button onClick={onClose} className="text-text-muted hover:text-text-primary">
+          <button onClick={onClose} aria-label="Close learning preferences" className="text-text-muted hover:text-text-primary">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -62,13 +64,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {goalOptions.map((item) => (
-              <div
+              <button
+                type="button"
                 key={item.id}
                 onClick={() => setGoal(item.id)}
                 className={`p-3.5 rounded-2xl border cursor-pointer transition ${
                   goal === item.id 
                     ? 'bg-indigo-950/90 border-indigo-500 text-text-primary shadow-glow-primary' 
-                    : 'bg-surface-low/80 border-slate-800 text-text-secondary hover:bg-slate-850'
+                    : 'bg-surface-low/80 border-surface-border text-text-secondary hover:bg-surface-container-high'
                 }`}
               >
                 <div className="font-bold text-xs flex items-center justify-between">
@@ -76,7 +79,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   {goal === item.id && <Check className="w-3.5 h-3.5 text-indigo-400" />}
                 </div>
                 <div className="text-[11px] text-text-muted mt-1">{item.desc}</div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -92,7 +95,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 key={lvl}
                 onClick={() => setLevel(lvl)}
                 className={`py-2.5 rounded-xl border text-xs font-semibold transition ${
-                  level === lvl ? 'bg-indigo-600 border-indigo-500 text-text-primary' : 'bg-surface-low border-slate-800 text-text-muted'
+                  level === lvl ? 'bg-indigo-600 border-indigo-500 text-text-primary' : 'bg-surface-low border-surface-border text-text-muted'
                 }`}
               >
                 {lvl}
@@ -112,7 +115,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 key={t}
                 onClick={() => setTime(t)}
                 className={`px-4 py-2 rounded-xl border text-xs font-semibold transition ${
-                  time === t ? 'bg-indigo-600 border-indigo-500 text-text-primary' : 'bg-surface-low border-slate-800 text-text-muted'
+                  time === t ? 'bg-indigo-600 border-indigo-500 text-text-primary' : 'bg-surface-low border-surface-border text-text-muted'
                 }`}
               >
                 {t}
@@ -121,7 +124,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-800 flex justify-end">
+        <div className="pt-4 border-t border-surface-border flex justify-end">
           <button
             onClick={handleSave}
             className="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 text-text-primary font-bold px-6 py-2.5 rounded-xl text-xs shadow-glow-primary transition"

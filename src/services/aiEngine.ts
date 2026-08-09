@@ -1,5 +1,5 @@
-import type { Resource, OneHourSession, QuizQuestion, PracticeExercise, MiniProjectChallenge, SkillOverview, LearningScore } from '../types';
-import { INITIAL_RESOURCES, MOCK_SKILLS, SAMPLE_QUIZZES, SAMPLE_PRACTICE_EXERCISES, SAMPLE_MINI_PROJECTS } from './mockData';
+import type { Resource, OneHourSession } from '../types';
+import { INITIAL_RESOURCES, SAMPLE_QUIZZES, SAMPLE_PRACTICE_EXERCISES, SAMPLE_MINI_PROJECTS } from './mockData';
 
 export class AiEngine {
   /**
@@ -334,7 +334,7 @@ export class AiEngine {
   /**
    * Contextual AI Learning Assistant response generator.
    */
-  static askAssistant(skill: string, question: string, currentContext?: string): string {
+  static askAssistant(skill: string, question: string, _currentContext?: string): string {
     const q = question.toLowerCase();
     if (q.includes('simpler') || q.includes('simple')) {
       return `Think of ${skill} like a smart kitchen appliance: instead of manually managing every step, you give it clear instructions (props/state) and it reliably delivers the exact output every single time without cluttering your main counter.`;

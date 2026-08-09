@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, Sparkles, Play, GraduationCap, BookOpen, ArrowRight, Clock, Route } from 'lucide-react';
+import { Search, Sparkles, Play, GraduationCap, BookOpen, ArrowRight, Clock, Route } from 'lucide-react';
 import type { Resource } from '../types';
 
 interface GlobalSearchModalProps {
@@ -78,7 +78,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
       >
         {/* Search Header Input */}
         <div className="p-4 border-b border-surface-border flex items-center gap-3 bg-surface-low/80">
-          <Search className="w-5 h-5 text-primary-400 shrink-0" />
+          <Search className="w-5 h-5 text-primary shrink-0" />
           <input
             type="text"
             autoFocus
@@ -115,7 +115,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                       onClick={() => handleSelectSkill(skill)}
                       className="px-3 py-1.5 rounded-lg bg-surface-high/50 hover:bg-surface-highest border border-surface-border text-xs text-text-secondary hover:text-text-primary transition flex items-center gap-1.5"
                     >
-                      <Route className="w-3 h-3 text-primary-400" />
+                      <Route className="w-3 h-3 text-primary" />
                       <span>{skill}</span>
                     </button>
                   ))}
@@ -136,7 +136,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-surface-high/40 text-xs text-text-secondary hover:text-text-primary transition flex items-center justify-between group"
                     >
                       <span className="truncate">{recent}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-text-muted group-hover:text-primary-400 transition shrink-0" />
+                      <ArrowRight className="w-3.5 h-3.5 text-text-muted group-hover:text-primary transition shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -175,7 +175,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                         {item.provider === 'Udemy' && <BookOpen className="w-4 h-4 text-purple-400" />}
                       </div>
                       <div>
-                        <div className="font-semibold text-xs text-text-primary group-hover:text-primary-300 transition-colors line-clamp-1">
+                        <div className="font-semibold text-xs text-text-primary group-hover:text-primary transition-colors line-clamp-1">
                           {item.title}
                         </div>
                         <div className="text-[10px] text-text-muted font-mono flex items-center gap-2 mt-0.5">
@@ -183,12 +183,12 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                           <span>•</span>
                           <span>{item.priceType}</span>
                           <span>•</span>
-                          <span className="text-primary-400 font-bold">AI Match: {item.learningScore.score}/100</span>
+                          <span className="text-primary font-bold">AI Match: {item.learningScore.score}/100</span>
                         </div>
                       </div>
                     </div>
 
-                    <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-primary-400 transition shrink-0 ml-2" />
+                    <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-primary transition shrink-0 ml-2" />
                   </div>
                 ))
               )}

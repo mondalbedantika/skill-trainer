@@ -63,7 +63,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
   };
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group border border-surface-border hover:border-primary-500/40">
+    <div className="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group border border-surface-border hover:border-primary/40">
       <div>
         {/* Thumbnail & Badge Header */}
         <div className="relative aspect-video bg-background overflow-hidden">
@@ -86,7 +86,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               aria-label={isSaved ? 'Remove Bookmark' : 'Save Resource'}
               className={`absolute top-3 right-3 p-2 rounded-xl backdrop-blur-md transition ${
                 isSaved 
-                  ? 'bg-amber-500 text-slate-950 font-bold' 
+                  ? 'bg-amber-500 text-text-primary font-bold'
                   : 'bg-background/70 text-text-secondary hover:text-text-primary hover:bg-surface-low'
               }`}
             >
@@ -96,7 +96,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-text-secondary font-medium">
             <span className="flex items-center gap-1 bg-background/80 backdrop-blur px-2 py-0.5 rounded font-mono text-[11px]">
-              <Clock className="w-3.5 h-3.5 text-primary-400" />
+              <Clock className="w-3.5 h-3.5 text-primary" />
               {resource.duration}
             </span>
             <span className="flex items-center gap-1 bg-background/80 backdrop-blur px-2 py-0.5 rounded font-mono text-[11px]">
@@ -109,12 +109,13 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
         {/* Card Body */}
         <div className="p-5 space-y-3">
           
-          <h3 
+          <button
+            type="button"
             onClick={() => onSelectResource?.(resource)}
-            className="text-base font-bold text-text-primary group-hover:text-primary transition-colors line-clamp-2 cursor-pointer"
+            className="text-left text-base font-bold text-text-primary group-hover:text-primary transition-colors line-clamp-2"
           >
             {resource.title}
-          </h3>
+          </button>
 
           <div className="text-[11px] text-text-muted font-mono flex items-center gap-2">
             <span>By: <strong className="text-text-secondary">{resource.channel || resource.instructor || 'Technical Expert'}</strong></span>
@@ -132,9 +133,11 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
           {/* AI Score Badge / Rationale */}
           <div className="bg-surface-low border border-surface-border rounded-xl p-3 space-y-2">
-            <div 
+            <button
+              type="button"
               onClick={() => setIsScoreExpanded(!isScoreExpanded)}
-              className="flex items-center justify-between cursor-pointer"
+              className="w-full flex items-center justify-between text-left"
+              aria-expanded={isScoreExpanded}
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-500" />
@@ -142,15 +145,15 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   AI MATCH: <span className="text-primary">{resource.learningScore.score}/100</span>
                 </span>
               </div>
-              <button className="text-text-muted hover:text-text-primary text-xs flex items-center gap-1">
+              <span className="text-text-muted text-xs flex items-center gap-1">
                 <span className="text-[11px]">Why this?</span>
                 {isScoreExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-              </button>
-            </div>
+              </span>
+            </button>
 
             {isScoreExpanded && (
               <div className="pt-2 border-t border-surface-border space-y-1.5 text-xs text-text-secondary animate-fadeIn">
-                <p className="text-[11px] italic text-primary-300 mb-2">{resource.learningScore.verdict}</p>
+                <p className="text-[11px] italic text-primary mb-2">{resource.learningScore.verdict}</p>
                 {resource.learningScore.reasons.map((r, idx) => (
                   <div key={idx} className="flex items-start gap-1.5 text-[11px]">
                     <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />

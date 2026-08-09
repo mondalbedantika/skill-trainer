@@ -15,38 +15,26 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-import { UserGoals } from '../types';
+import { APP_NAME } from '../constants/app';
+import { useNavigation, type AppTab } from '../context/NavigationContext';
+import { useLearning } from '../context/LearningContext';
 
-interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  userGoals: UserGoals;
-  onOpenOnboarding: () => void;
-  onOpenSearch: () => void;
-  onStartOneHour: (skillName?: string) => void;
-}
-
-const NAV_ITEMS = [
+const NAV_ITEMS: { id: AppTab; label: string; icon: React.ElementType; color: string }[] = [
   { id: 'explore', label: 'Home', icon: Compass, color: 'text-cyan-400' },
   { id: 'dashboard', label: 'My Learning', icon: FolderOpen, color: 'text-emerald-400' },
   { id: 'resources', label: 'Resources', icon: Search, color: 'text-blue-400' },
   { id: 'aipaths', label: 'AI Paths', icon: Route, color: 'text-purple-400' },
 ];
 
-const SECONDARY_NAV = [
+const SECONDARY_NAV: { id: AppTab; label: string; icon: React.ElementType; color: string }[] = [
   { id: 'interview', label: 'Interview', icon: Code2, color: 'text-amber-400' },
   { id: 'saved', label: 'Saved', icon: Bookmark, color: 'text-amber-400' },
   { id: 'progress', label: 'Progress', icon: BarChart3, color: 'text-cyan-400' },
 ];
 
-export const Navbar: React.FC<NavbarProps> = ({
-  activeTab,
-  setActiveTab,
-  userGoals,
-  onOpenOnboarding,
-  onOpenSearch,
-  onStartOneHour,
-}) => {
+export const Navbar: React.FC = () => {
+  const { activeTab, setActiveTab, setIsOnboardingOpen, setIsSearchOpen } = useNavigation();
+  const { userGoals, startOneHour } = useLearning();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   
   const [isDarkMode, setIsDarkMode] = React.useState(() => {
@@ -84,8 +72,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
           <div className="hidden sm:block">
-            <span className="font-semibold text-sm tracking-tight text-text-primary group-hover:text-indigo-300 transition-colors">
-              One-Hour Skill Trainer
+            <span className="font-semibold text-sm tracking-tight text-text-primary group-hover:text-primary transition-colors">
+              {APP_NAME}
             </span>
           </div>
         </div>
@@ -109,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <Icon className={`w-3.5 h-3.5 ${isActive ? item.color : ''}`} />
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary-500 rounded-full" />
+                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary-brand rounded-full" />
                 )}
               </button>
             );
@@ -134,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <Icon className={`w-3.5 h-3.5 ${isActive ? item.color : ''}`} />
                 <span className="hidden lg:inline">{item.label}</span>
                 {isActive && (
-                  <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-primary-500 rounded-full" />
+                  <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-primary-brand rounded-full" />
                 )}
               </button>
             );
@@ -155,11 +143,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Global Cmd+K Search Launcher */}
           <button
-            onClick={onOpenSearch}
+            onClick={() => setIsSearchOpen(true)}
             className="hidden sm:flex items-center gap-2 bg-surface-low hover:bg-surface text-text-muted hover:text-text-secondary border border-surface-border px-3 py-1.5 rounded-lg text-xs transition-all w-44"
             aria-label="Open search (Ctrl+K)"
           >
-            <Search className="w-3.5 h-3.5 text-primary-400" />
+            <Search className="w-3.5 h-3.5 text-primary" />
             <span className="flex-1 text-left truncate">Search...</span>
             <kbd className="hidden lg:inline-block bg-surface border border-surface-border text-[9px] font-mono text-text-muted px-1 py-0.5 rounded">
               ⌘K
@@ -168,18 +156,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* User Goals Pill */}
           <button
-            onClick={onOpenOnboarding}
+            onClick={() => setIsOnboardingOpen(true)}
             title="Configure Learning Goal & Preferences"
             className="hidden xl:flex items-center gap-1.5 bg-surface-low hover:bg-surface border border-surface-border text-text-secondary text-[11px] px-2.5 py-1.5 rounded-lg font-medium transition"
             aria-label="Learning preferences"
           >
-            <SlidersHorizontal className="w-3 h-3 text-primary-400" />
+            <SlidersHorizontal className="w-3 h-3 text-primary" />
             <span className="truncate max-w-[100px]">{userGoals.primaryGoal}</span>
           </button>
 
           {/* 1-HOUR MODE TRIGGER */}
           <button
-            onClick={() => onStartOneHour('React Hooks')}
+            onClick={() => startOneHour('React Hooks')}
             className="relative group p-[1px] rounded-lg overflow-hidden font-semibold text-xs shadow-glow-primary transition-transform active:scale-95"
             aria-label="Build a 1-hour learning path"
           >
@@ -218,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }}
                   className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                     isActive
-                      ? 'bg-primary-600/15 text-text-primary border border-primary-500/30'
+                      ? 'bg-primary-container/15 text-text-primary border border-primary/30'
                       : 'text-text-muted hover:text-text-primary hover:bg-surface-high/30'
                   }`}
                 >

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Code2, Sparkles, CheckCircle2, AlertTriangle, ArrowRight, Lightbulb, ExternalLink } from 'lucide-react';
+import { Sparkles, AlertTriangle } from 'lucide-react';
 import { SAMPLE_INTERVIEW_QUESTIONS } from '../services/mockData';
-import { InterviewQuestion } from '../types';
 
 interface InterviewPrepViewProps {
   onStartOneHour: (skillName: string) => void;
@@ -25,7 +24,7 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
       
       {/* Header */}
-      <div className="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="glass-panel p-6 rounded-3xl border border-surface-border flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="bg-purple-950 text-purple-300 border border-purple-800 text-[10px] font-bold px-2 py-0.5 rounded tracking-wider uppercase">
@@ -45,7 +44,7 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
             setIsEvaluated(false);
             setUserAnswer('');
           }}
-          className="bg-surface-low border border-slate-800 text-text-secondary text-xs rounded-xl px-4 py-2.5 font-bold focus:outline-none focus:border-indigo-500"
+          className="bg-surface-low border border-surface-border text-text-secondary text-xs rounded-xl px-4 py-2.5 font-bold focus:outline-none focus:border-indigo-500"
         >
           <option value="react-hooks">React Hooks & Architecture</option>
           <option value="python">Python Fundamentals & Internals</option>
@@ -61,7 +60,7 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition ${
               selectedCategory === cat 
                 ? 'bg-purple-600 text-text-primary shadow-glow-primary' 
-                : 'bg-surface-low text-text-muted hover:text-text-primary border border-slate-800'
+                : 'bg-surface-low text-text-muted hover:text-text-primary border border-surface-border'
             }`}
           >
             {cat}
@@ -70,11 +69,11 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
       </div>
 
       {/* Interactive Question Card */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
+      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-surface-border space-y-6">
         
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center justify-between border-b border-surface-border pb-4">
           <span className="text-xs font-mono font-bold text-indigo-400">Question {currentQuestionIndex + 1} of {questions.length}</span>
-          <span className="bg-surface-low text-text-secondary text-xs px-2.5 py-1 rounded-lg border border-slate-800">{currentQ.category}</span>
+          <span className="bg-surface-low text-text-secondary text-xs px-2.5 py-1 rounded-lg border border-surface-border">{currentQ.category}</span>
         </div>
 
         <h2 className="text-xl font-bold text-text-primary leading-relaxed">{currentQ.question}</h2>
@@ -86,7 +85,7 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
             value={userAnswer}
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder="Type your response here as if explaining to a Principal Staff Engineer..."
-            className="w-full h-40 bg-background border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 focus:outline-none focus:border-indigo-500 resize-none"
+            className="w-full h-40 bg-background border border-surface-border rounded-2xl p-4 text-xs font-mono text-text-primary focus:outline-none focus:border-indigo-500 resize-none"
           />
         </div>
 
@@ -101,12 +100,12 @@ export const InterviewPrepView: React.FC<InterviewPrepViewProps> = ({ onStartOne
             </button>
           </div>
         ) : (
-          <div className="space-y-6 pt-4 border-t border-slate-800 animate-fadeIn">
+          <div className="space-y-6 pt-4 border-t border-surface-border animate-fadeIn">
             
             {/* Model Answer Breakdown */}
-            <div className="bg-surface-low border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div className="bg-surface-low border border-surface-border p-5 rounded-2xl space-y-3">
               <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">AI Model Answer & Rationale:</h3>
-              <p className="text-xs text-text-secondary leading-relaxed font-mono bg-background p-4 rounded-xl border border-slate-800">
+              <p className="text-xs text-text-secondary leading-relaxed font-mono bg-background p-4 rounded-xl border border-surface-border">
                 {currentQ.sampleAnswer}
               </p>
 

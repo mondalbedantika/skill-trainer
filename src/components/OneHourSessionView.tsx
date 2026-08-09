@@ -16,14 +16,11 @@ import {
   Lightbulb,
   ExternalLink,
   Award,
-  Lock,
-  Pause,
-  ChevronRight,
-  Bot,
-  RotateCw
+  Lock
 } from 'lucide-react';
-import { OneHourSession, SessionStage, TimelineStepState } from '../types';
+import { OneHourSession, TimelineStepState } from '../types';
 import { AiCopilotPanel } from './AiCopilotPanel';
+import { APP_NAME } from '../constants/app';
 import confetti from 'canvas-confetti';
 
 interface OneHourSessionViewProps {
@@ -68,7 +65,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
 
   // Timer Effect
   useEffect(() => {
-    let interval: any = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (isTimerRunning) {
       interval = setInterval(() => {
         setElapsedSeconds(prev => {
@@ -78,7 +75,9 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
         });
       }, 1000);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval !== null) clearInterval(interval);
+    };
   }, [isTimerRunning, STORAGE_KEY]);
 
   // Sync starter code
@@ -167,7 +166,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
             <span className="hidden sm:inline">Exit</span>
           </button>
           <div>
-            <span className="label-mono text-primary-400 block">One-Hour Session</span>
+            <span className="label-mono text-primary block">{APP_NAME} Session</span>
             <h1 className="text-xs sm:text-sm font-semibold text-text-primary truncate max-w-[180px] sm:max-w-md">{session.skillName}</h1>
           </div>
         </div>
@@ -178,18 +177,18 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
           <div className="hidden md:flex flex-col items-end">
             <div className="flex items-center gap-2 text-xs font-mono">
               <span className="text-text-muted">Progress:</span>
-              <span className="font-bold text-primary-400">{completionPercentage}%</span>
+              <span className="font-bold text-primary">{completionPercentage}%</span>
             </div>
             <div className="w-28 bg-surface-low h-1.5 rounded-full overflow-hidden border border-surface-border mt-1">
               <div 
-                className="bg-gradient-to-r from-primary-500 to-accent-cyan h-full rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-primary-brand to-cyan-400 h-full rounded-full transition-all duration-300"
                 style={{ width: `${completionPercentage}%` }}
               />
             </div>
           </div>
 
           <div className="flex items-center gap-2 bg-surface-low border border-surface-border px-3 py-1.5 rounded-xl text-xs font-mono font-semibold text-text-primary">
-            <Clock className="w-3.5 h-3.5 text-primary-400 animate-pulse" />
+            <Clock className="w-3.5 h-3.5 text-primary animate-pulse" />
             <span>{formatTimer(remainingSeconds)}</span>
             <button
               onClick={() => setIsTimerRunning(!isTimerRunning)}
@@ -223,7 +222,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
               onClick={() => setCurrentStageIndex(idx)}
               className={`px-3 py-1 rounded-lg text-xs font-mono shrink-0 transition flex items-center gap-1.5 ${
                 isActive 
-                  ? 'bg-primary-600/20 border border-primary-500 text-text-primary font-bold' 
+                  ? 'bg-primary-container/20 border border-primary text-text-primary font-bold'
                   : isDone 
                     ? 'bg-emerald-950/40 border border-emerald-800/40 text-emerald-400' 
                     : 'bg-surface-high/30 border border-surface-border text-text-disabled'
@@ -262,7 +261,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                 >
                   <div className="mt-0.5 shrink-0">
                     {nodeState === 'COMPLETED' && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-                    {nodeState === 'CURRENT' && <Sparkles className="w-4 h-4 text-primary-400 animate-pulse" />}
+                    {nodeState === 'CURRENT' && <Sparkles className="w-4 h-4 text-primary animate-pulse" />}
                     {nodeState === 'LOCKED' && <Lock className="w-4 h-4 text-text-disabled" />}
                   </div>
 
@@ -338,9 +337,9 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                         className="p-3 bg-surface-card hover:bg-surface-high rounded-lg border border-surface-border transition cursor-pointer"
                       >
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-mono font-bold text-primary-400">{ts.startTime} – {ts.endTime}</span>
+                          <span className="text-xs font-mono font-bold text-primary">{ts.startTime} – {ts.endTime}</span>
                           {ts.isRecommendedFor1Hour && (
-                            <span className="bg-primary-950 text-primary-300 text-[9px] font-mono px-1.5 py-0.5 rounded">1-Hour Fit</span>
+                            <span className="bg-surface-low text-primary text-[9px] font-mono px-1.5 py-0.5 rounded">1-Hour Fit</span>
                           )}
                         </div>
                         <div className="text-xs font-semibold text-text-primary">{ts.title}</div>
@@ -369,13 +368,13 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {currentStage.content.aiSummary.keyConcepts.map((item, idx) => (
                   <div key={idx} className="bg-surface-low border border-surface-border p-4 rounded-xl space-y-2.5">
-                    <div className="w-6 h-6 rounded-md bg-primary-950 border border-primary-800 text-primary-400 flex items-center justify-center font-mono font-bold text-xs">
+                    <div className="w-6 h-6 rounded-md bg-surface-low border border-primary/40 text-primary flex items-center justify-center font-mono font-bold text-xs">
                       0{idx + 1}
                     </div>
                     <h3 className="font-semibold text-text-primary text-xs">{item.concept}</h3>
                     <p className="text-[11px] text-text-muted leading-relaxed">{item.detail}</p>
                     {item.codeSnippet && (
-                      <pre className="bg-background p-2.5 rounded-lg border border-surface-border font-mono text-[10px] text-primary-300 overflow-x-auto">
+                      <pre className="bg-background p-2.5 rounded-lg border border-surface-border font-mono text-[10px] text-primary overflow-x-auto">
                         {item.codeSnippet}
                       </pre>
                     )}
@@ -403,7 +402,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                   <div className="space-y-2">
                     {currentStage.content.practice.requirements.map((req, rIdx) => (
                       <div key={rIdx} className="flex items-center gap-2 text-xs">
-                        <div className={`w-4 h-4 rounded flex items-center justify-center ${passedRequirements[rIdx] ? 'bg-emerald-500 text-slate-950 font-bold' : 'border border-surface-border bg-background'}`}>
+                        <div className={`w-4 h-4 rounded flex items-center justify-center ${passedRequirements[rIdx] ? 'bg-emerald-500 text-text-primary font-bold' : 'border border-surface-border bg-background'}`}>
                           {passedRequirements[rIdx] && <Check className="w-3 h-3 stroke-[3]" />}
                         </div>
                         <span className={passedRequirements[rIdx] ? 'text-emerald-300 font-semibold' : 'text-text-secondary'}>{req}</span>
@@ -416,7 +415,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                 <div className="lg:col-span-2 bg-background border border-surface-border rounded-xl overflow-hidden flex flex-col">
                   <div className="bg-surface-low px-4 py-2 border-b border-surface-border flex items-center justify-between">
                     <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
-                      <Terminal className="w-3.5 h-3.5 text-primary-400" />
+                      <Terminal className="w-3.5 h-3.5 text-primary" />
                       <span>practice_solution.js</span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -482,9 +481,9 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                 </div>
 
                 {quizScorePercentage !== null && (
-                  <div className="bg-primary-950 border border-primary-800 p-3 rounded-xl text-center">
+                  <div className="bg-surface-low border border-primary/40 p-3 rounded-xl text-center">
                     <div className="text-[10px] font-mono text-text-muted">Quiz Score</div>
-                    <div className="text-lg font-mono font-bold text-primary-300">{quizScorePercentage}%</div>
+                    <div className="text-lg font-mono font-bold text-primary">{quizScorePercentage}%</div>
                     <div className="text-[9px] font-mono text-emerald-400 mt-0.5">
                       {quizScorePercentage >= 80 ? 'Concept Mastered' : 'Recommended Review'}
                     </div>
@@ -500,7 +499,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                   return (
                     <div key={q.id} className="bg-surface-low border border-surface-border p-4 rounded-xl space-y-2.5">
                       <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="text-primary-400 font-semibold">QUESTION 0{qIdx + 1} / 05</span>
+                        <span className="text-primary font-semibold">QUESTION 0{qIdx + 1} / 05</span>
                         <span className="text-text-muted">{q.topicTag}</span>
                       </div>
 
@@ -510,7 +509,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                         {q.options.map((opt, optIdx) => {
                           let btnStyle = 'bg-surface-card border-surface-border text-text-secondary hover:bg-surface-high';
                           if (selected === optIdx) {
-                            btnStyle = 'bg-primary-950 border-primary-500 text-text-primary font-semibold';
+                            btnStyle = 'bg-surface-low border-primary text-text-primary font-semibold';
                           }
                           if (quizSubmitted) {
                             if (optIdx === q.correctIndex) {
@@ -575,13 +574,13 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
                     <div 
                       key={idx} 
                       onClick={() => setCheckedChallengeSteps(prev => ({ ...prev, [idx]: !prev[idx] }))}
-                      className="p-3 bg-surface-card border border-surface-border rounded-lg text-xs text-text-secondary flex items-start gap-2.5 cursor-pointer hover:border-primary-500/40 transition"
+                      className="p-3 bg-surface-card border border-surface-border rounded-lg text-xs text-text-secondary flex items-start gap-2.5 cursor-pointer hover:border-primary/40 transition"
                     >
                       <input 
                         type="checkbox" 
                         checked={!!checkedChallengeSteps[idx]} 
                         onChange={() => {}}
-                        className="mt-0.5 rounded border-surface-border text-primary-600 focus:ring-primary-500" 
+                        className="mt-0.5 rounded border-surface-border text-primary-brand focus:ring-primary-brand"
                       />
                       <span className={checkedChallengeSteps[idx] ? 'line-through text-text-muted' : 'text-text-primary font-medium'}>
                         {step}
@@ -596,7 +595,7 @@ export const OneHourSessionView: React.FC<OneHourSessionViewProps> = ({
           {/* STAGE 6: REFLECT */}
           {currentStage.type === 'reflection' && currentStage.content.reflection && (
             <div className="space-y-6 text-center max-w-xl mx-auto py-4 animate-fadeIn">
-              <div className="w-14 h-14 bg-gradient-to-tr from-primary-600 to-accent-cyan text-text-primary rounded-2xl flex items-center justify-center mx-auto shadow-glow-primary">
+              <div className="w-14 h-14 bg-gradient-to-tr from-primary-brand to-cyan-400 text-text-primary rounded-2xl flex items-center justify-center mx-auto shadow-glow-primary">
                 <Award className="w-7 h-7" />
               </div>
 

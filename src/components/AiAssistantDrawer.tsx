@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Send, Bot, User, Lightbulb, Code } from 'lucide-react';
+import { X, Sparkles, Send, Bot } from 'lucide-react';
 import { AiEngine } from '../services/aiEngine';
+import { useDialogAccessibility } from './common/useDialogAccessibility';
 
 interface AiAssistantDrawerProps {
   isOpen: boolean;
@@ -13,8 +14,9 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
   isOpen,
   onClose,
   skillName,
-  initialQuestion
+  initialQuestion: _initialQuestion
 }) => {
+  const dialogRef = useDialogAccessibility(isOpen, onClose);
   const [messages, setMessages] = useState<{ sender: 'ai' | 'user'; text: string }[]>([
     {
       sender: 'ai',
@@ -48,21 +50,21 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
   ];
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[420px] glass-panel border-l border-slate-800 shadow-2xl flex flex-col justify-between animate-slideInRight">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="ai-assistant-title" className="fixed inset-y-0 right-0 z-50 w-full sm:w-[420px] glass-panel border-l border-surface-border shadow-2xl flex flex-col justify-between animate-slideInRight">
       
       {/* Drawer Header */}
-      <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-surface-low/80">
+      <div className="p-4 border-b border-surface-border flex items-center justify-between bg-surface-low/80">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-indigo-600/90 text-text-primary flex items-center justify-center shadow-glow-primary">
             <Bot className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-bold text-text-primary text-sm">AI Learning Assistant</h3>
+            <h3 id="ai-assistant-title" className="font-bold text-text-primary text-sm">AI Learning Assistant</h3>
             <p className="text-[10px] text-text-muted font-medium">Context: {skillName}</p>
           </div>
         </div>
 
-        <button onClick={onClose} className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-slate-800">
+        <button onClick={onClose} aria-label="Close AI assistant" className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-container-high">
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -83,7 +85,7 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
             <div className={`p-3 rounded-2xl max-w-[85%] leading-relaxed ${
               m.sender === 'user' 
                 ? 'bg-indigo-600 text-text-primary font-medium rounded-tr-none' 
-                : 'bg-surface-low text-text-secondary border border-slate-800 rounded-tl-none whitespace-pre-wrap'
+                : 'bg-surface-low text-text-secondary border border-surface-border rounded-tl-none whitespace-pre-wrap'
             }`}>
               {m.text}
             </div>
@@ -92,14 +94,14 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
       </div>
 
       {/* Quick Prompt Chips */}
-      <div className="p-3 border-t border-slate-800 bg-background/60 space-y-2">
+      <div className="p-3 border-t border-surface-border bg-background/60 space-y-2">
         <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Suggested Questions:</div>
         <div className="flex flex-wrap gap-1.5">
           {quickPromptChips.map((chip, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(chip)}
-              className="text-[11px] bg-surface-low hover:bg-slate-800 text-text-secondary border border-slate-800 px-2.5 py-1 rounded-lg transition"
+              className="text-[11px] bg-surface-low hover:bg-surface-container-high text-text-secondary border border-surface-border px-2.5 py-1 rounded-lg transition"
             >
               {chip}
             </button>
@@ -119,7 +121,7 @@ export const AiAssistantDrawer: React.FC<AiAssistantDrawerProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask AI anything about this lesson..."
-            className="w-full bg-surface-low border border-slate-800 text-text-primary placeholder-slate-400 text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-indigo-500"
+            className="w-full bg-surface-low border border-surface-border text-text-primary placeholder-text-muted text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-primary-brand"
           />
           <button
             type="submit"

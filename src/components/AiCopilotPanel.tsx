@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Send, X, Bot, Loader2 } from 'lucide-react';
+import { Sparkles, Send, X, Loader2 } from 'lucide-react';
 import { AiEngine } from '../services/aiEngine';
 
 interface AiCopilotPanelProps {
@@ -68,7 +68,7 @@ export const AiCopilotPanel: React.FC<AiCopilotPanelProps> = ({
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-semibold text-xs text-text-primary">✦ AI COPILOT</span>
-              <span className="bg-primary-950 text-primary-300 text-[9px] font-mono px-1.5 rounded">Contextual</span>
+              <span className="bg-surface-low text-primary text-[9px] font-mono px-1.5 rounded">Contextual</span>
             </div>
             <p className="text-[10px] text-text-muted truncate max-w-[190px] font-mono">
               {skillName} • {activeStage}
@@ -93,14 +93,14 @@ export const AiCopilotPanel: React.FC<AiCopilotPanelProps> = ({
             className={`flex gap-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             {msg.sender === 'ai' && (
-              <div className="w-5 h-5 rounded bg-primary-950 border border-primary-800 text-primary-400 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-5 h-5 rounded bg-surface-low border border-primary/40 text-primary flex items-center justify-center shrink-0 mt-0.5">
                 <Sparkles className="w-3 h-3 text-amber-300" />
               </div>
             )}
             <div
               className={`p-2.5 rounded-xl max-w-[88%] leading-relaxed ${
                 msg.sender === 'user'
-                  ? 'bg-primary-600 text-text-primary font-sans rounded-tr-none text-xs'
+                  ? 'bg-primary-brand text-text-primary font-sans rounded-tr-none text-xs'
                   : 'bg-surface-low text-text-secondary border border-surface-border rounded-tl-none whitespace-pre-wrap text-[11px]'
               }`}
             >
@@ -111,8 +111,8 @@ export const AiCopilotPanel: React.FC<AiCopilotPanelProps> = ({
 
         {isTyping && (
           <div className="flex gap-2 justify-start items-center text-text-muted text-xs">
-            <div className="w-5 h-5 rounded bg-primary-950 border border-primary-800 text-primary-400 flex items-center justify-center shrink-0">
-              <Loader2 className="w-3 h-3 animate-spin text-primary-400" />
+            <div className="w-5 h-5 rounded bg-surface-low border border-primary/40 text-primary flex items-center justify-center shrink-0">
+              <Loader2 className="w-3 h-3 animate-spin text-primary" />
             </div>
             <span className="font-mono text-[11px]">Thinking...</span>
           </div>
@@ -128,7 +128,7 @@ export const AiCopilotPanel: React.FC<AiCopilotPanelProps> = ({
               key={idx}
               onClick={() => handleSend(p)}
               disabled={isTyping}
-              className="text-[10px] font-mono bg-surface-card hover:bg-surface-high text-text-secondary border border-surface-border px-2 py-0.5 rounded transition hover:border-primary-500/50 disabled:opacity-50"
+              className="text-[10px] font-mono bg-surface-card hover:bg-surface-high text-text-secondary border border-surface-border px-2 py-0.5 rounded transition hover:border-primary/50 disabled:opacity-50"
             >
               {p}
             </button>
@@ -148,12 +148,12 @@ export const AiCopilotPanel: React.FC<AiCopilotPanelProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask Copilot about this lesson..."
-            className="w-full bg-surface-card border border-surface-border text-text-primary placeholder-text-muted text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-primary-500"
+            className="w-full bg-surface-card border border-surface-border text-text-primary placeholder-text-muted text-xs px-2.5 py-1.5 rounded-lg focus:outline-none focus:border-primary"
           />
           <button
             type="submit"
             disabled={isTyping || !input.trim()}
-            className="p-1.5 bg-primary-600 hover:bg-primary-500 disabled:opacity-40 text-text-primary rounded-lg transition shrink-0"
+            className="p-1.5 bg-primary-brand hover:bg-primary-brand disabled:opacity-40 text-text-primary rounded-lg transition shrink-0"
             aria-label="Send message"
           >
             <Send className="w-3.5 h-3.5" />

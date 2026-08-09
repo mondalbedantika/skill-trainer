@@ -173,7 +173,7 @@ export const INITIAL_RESOURCES: Resource[] = [
     projectCount: 2,
     learningScore: {
       score: 98,
-      verdict: 'Ideal match for 1-Hour Skill Trainer! Tailor-made length and pacing.',
+      verdict: 'Ideal match for HourForge! Tailor-made length and pacing.',
       bestFor: 'Complete beginners needing zero setup code walkthroughs.',
       notIdealFor: 'Advanced engineers looking for asyncio or CPython internals.',
       reasons: [
@@ -612,18 +612,18 @@ export default function CounterApp() {
   const [isDark, setIsDark] = useState(false);
 
   return (
-    <div className={\`p-6 rounded-xl border transition-all \${isDark ? 'bg-slate-900 text-white border-slate-700' : 'bg-white text-slate-900 border-slate-200'}\`}>
+    <div className="p-6 rounded-xl border transition-all bg-surface-low text-text-primary border-surface-border">
       <h2 className="text-2xl font-bold mb-3">Count: {count}</h2>
       <div className="flex gap-3 mb-4">
         <button 
           onClick={() => setCount(prev => prev + 1)}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-500 transition"
+          className="px-4 py-2 bg-primary-brand text-white rounded-lg font-medium hover:opacity-90 transition"
         >
           Increment (+1)
         </button>
         <button 
           onClick={() => setCount(0)}
-          className="px-4 py-2 bg-slate-700 text-slate-200 rounded-lg font-medium hover:bg-slate-600 transition"
+          className="px-4 py-2 bg-surface-container-high text-text-secondary rounded-lg font-medium hover:bg-surface-border transition"
         >
           Reset
         </button>

@@ -29,7 +29,7 @@ export const ScoreBadge: React.FC<ScoreBadgeProps> = ({ learningScore }) => {
           onClick={(e) => e.stopPropagation()}
           className="absolute left-0 mt-2 w-72 glass-panel p-3.5 rounded-xl border border-indigo-800/80 shadow-2xl z-30 space-y-2 text-xs animate-fadeIn"
         >
-          <div className="flex items-center justify-between font-bold text-text-primary text-xs pb-1.5 border-b border-slate-800">
+          <div className="flex items-center justify-between font-bold text-text-primary text-xs pb-1.5 border-b border-surface-border">
             <span>Why this resource?</span>
             <span className="text-indigo-400 font-mono">{learningScore.score}/100</span>
           </div>

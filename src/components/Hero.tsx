@@ -6,7 +6,7 @@ interface HeroProps {
   onStartOneHour: (skillName: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour }) => {
+export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour: _onStartOneHour }) => {
   const [searchInput, setSearchInput] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,7 +28,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour }) => {
   ];
 
   return (
-    <div className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24 border-b border-slate-800/60">
+    <div className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24 border-b border-surface-border">
       {/* Background Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/10 to-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
 
@@ -51,14 +51,14 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour }) => {
 
         {/* Main Search Input Form */}
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-8">
-          <div className="relative flex items-center p-1.5 rounded-2xl glass-panel border border-slate-700/80 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/30 transition-all shadow-2xl">
+          <div className="relative flex items-center p-1.5 rounded-2xl glass-panel border border-surface-border focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/30 transition-all shadow-2xl">
             <Search className="w-6 h-6 text-text-muted ml-3.5 mr-2" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="What skill do you want to master? (e.g. React Hooks, Python, Docker)"
-              className="w-full bg-transparent text-text-primary placeholder-slate-400 text-base sm:text-lg focus:outline-none px-2 py-2"
+              className="w-full bg-transparent text-text-primary placeholder-text-muted text-base sm:text-lg focus:outline-none px-2 py-2"
             />
             <button
               type="submit"
@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour }) => {
                 setSearchInput(skill);
                 onSearch(skill);
               }}
-              className="px-3 py-1 bg-surface-low hover:bg-slate-800 text-text-secondary hover:text-text-primary border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-medium transition-all"
+              className="px-3 py-1 bg-surface-low hover:bg-surface-container-high text-text-secondary hover:text-text-primary border border-surface-border hover:border-surface-border rounded-lg text-xs font-medium transition-all"
             >
               {skill}
             </button>
@@ -98,17 +98,17 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onStartOneHour }) => {
         </div>
 
         {/* Trust & Provider Indicator Bar */}
-        <div className="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-semibold text-text-muted uppercase tracking-wider">
+        <div className="pt-6 border-t border-surface-border flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-semibold text-text-muted uppercase tracking-wider">
           <div className="flex items-center gap-2">
             <Play className="w-4 h-4 text-rose-400 fill-current" />
             <span>Free Resources</span>
           </div>
-          <span className="text-slate-700 hidden sm:inline">•</span>
+          <span className="text-text-muted hidden sm:inline">•</span>
           <div className="flex items-center gap-2">
             <GraduationCap className="w-4 h-4 text-blue-400" />
             <span>Premium Courses</span>
           </div>
-          <span className="text-slate-700 hidden sm:inline">•</span>
+          <span className="text-text-muted hidden sm:inline">•</span>
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-purple-400" />
             <span>AI-Generated Practice</span>

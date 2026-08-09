@@ -42,6 +42,10 @@
     --color-on-primary: #ffffff;
     --color-on-primary-container: #fffbff;
     --color-primary-brand: #6366f1; /* Brand spark */
+    --color-accent-warning: #b45309;
+    --color-accent-success: #15803d;
+    --color-accent-danger: #be123c;
+    --color-accent-info: #2563eb;
     
     /* Shadows */
     --shadow-level-2: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -99,6 +103,10 @@
     --color-on-primary: #1000a9;
     --color-on-primary-container: #0d0096;
     --color-primary-brand: #6366f1; /* Brand spark */
+    --color-accent-warning: #fbbf24;
+    --color-accent-success: #34d399;
+    --color-accent-danger: #fb7185;
+    --color-accent-info: #60a5fa;
     
     /* Shadows */
     --shadow-level-2: 0 10px 30px rgba(0, 0, 0, 0.5);

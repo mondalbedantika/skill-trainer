@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Clock, Target, CheckCircle2, TrendingUp, Sparkles, Hammer, BookOpen, ArrowRight } from 'lucide-react';
+import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import type { UserProgress } from '../types';
 
 interface ProgressViewProps {
@@ -34,7 +34,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
       
       {/* Page Header */}
       <div>
-        <span className="label-mono text-primary-400 mb-1 block">Analytics & Progression</span>
+        <span className="label-mono text-primary mb-1 block">Analytics & Progression</span>
         <h1 className="text-3xl font-semibold text-text-primary tracking-tight">Personal Progress</h1>
         <p className="text-sm text-text-muted mt-1">
           Minimalist telemetry of your 1-hour micro-learning sessions and mastery metrics.
@@ -76,7 +76,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
             <div key={item.skillName} className="space-y-2">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-text-primary font-medium">{item.skillName}</span>
-                <span className="text-primary-400 font-bold">{item.percentage}%</span>
+                <span className="text-primary font-bold">{item.percentage}%</span>
               </div>
               <div className="w-full bg-surface-low h-2.5 rounded-full overflow-hidden border border-surface-border">
                 <div 
@@ -92,7 +92,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
       {/* Recommendation Engine UI */}
       <div className="glass-panel p-6 rounded-2xl border border-surface-border space-y-6">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-primary-400" />
+          <TrendingUp className="w-4 h-4 text-primary" />
           <h2 className="text-lg font-semibold text-text-primary">Recommended Next</h2>
         </div>
 
@@ -108,10 +108,10 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="label-mono text-primary-400">{rec.match} Match</span>
+                  <span className="label-mono text-primary">{rec.match} Match</span>
                   <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                 </div>
-                <h3 className="font-semibold text-text-primary text-sm group-hover:text-primary-300 transition">{rec.skill}</h3>
+                <h3 className="font-semibold text-text-primary text-sm group-hover:text-primary transition">{rec.skill}</h3>
                 <p className="text-xs text-text-muted leading-relaxed">{rec.reason}</p>
               </div>
 

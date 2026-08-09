@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { 
-  Play, 
   Sparkles, 
   Award, 
   Clock, 
-  Target, 
   CheckCircle2, 
   ArrowRight,
   Search,
-  Zap,
   TrendingUp,
   Hammer
 } from 'lucide-react';
@@ -74,7 +71,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         <form onSubmit={handleSearch} className="max-w-2xl">
-          <div className="relative flex items-center p-1 rounded-xl glass-panel border border-surface-border focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20 transition-all">
+          <div className="relative flex items-center p-1 rounded-xl glass-panel border border-surface-border focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
             <Search className="w-5 h-5 text-text-muted ml-3 mr-2" />
             <input
               type="text"
@@ -98,7 +95,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* ── Continue Learning ── */}
       {progress.activeSession && (
         <section 
-          className="glass-panel p-5 sm:p-6 rounded-2xl border border-primary-500/30 relative overflow-hidden"
+          className="glass-panel p-5 sm:p-6 rounded-2xl border border-primary/30 relative overflow-hidden"
           aria-label="Continue your active learning session"
         >
           <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/8 blur-[100px] rounded-full pointer-events-none" />
@@ -106,8 +103,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-4 relative z-10">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="label-mono text-primary-400">Continue Learning</span>
-                <span className="label-mono px-1.5 py-0.5 rounded bg-primary-900/50 border border-primary-700/50 text-primary-300">
+                <span className="label-mono text-primary">Continue Learning</span>
+                <span className="label-mono px-1.5 py-0.5 rounded bg-primary/20 border border-primary/40 text-primary">
                   {progress.activeSession.activeStageTitle || 'LEARN'}
                 </span>
               </div>
@@ -121,7 +118,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               {/* Progress bar */}
               <div className="w-full sm:w-72 bg-surface-low h-1.5 rounded-full overflow-hidden border border-surface-border">
                 <div 
-                  className="bg-gradient-to-r from-primary-500 to-accent-cyan h-full rounded-full transition-all duration-700"
+                  className="bg-gradient-to-r from-primary-brand to-cyan-400 h-full rounded-full transition-all duration-700"
                   style={{ width: `${progress.activeSession.completionPercentage}%` }}
                 />
               </div>
@@ -131,52 +128,49 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               onClick={onContinueSession}
               className="btn-primary text-xs"
             >
-              <span>Continue Session</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Resume Session</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </section>
       )}
 
-      {/* ── Stats Grid ── */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3" aria-label="Learning statistics">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div key={stat.label} className="glass-panel p-4 rounded-xl border border-surface-border space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="label-mono">{stat.label}</span>
-                <Icon className={`w-4 h-4 ${stat.iconColor}`} />
-              </div>
-              <div className="text-2xl font-semibold text-text-primary font-mono">{stat.value}</div>
-            </div>
-          );
-        })}
-      </section>
-
-      {/* ── Two Column: Skill Map + Activity ── */}
+      {/* Grid Layout: Stats & Skill Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Skill Mastery Bars */}
-        <section className="lg:col-span-2 glass-panel p-5 sm:p-6 rounded-2xl border border-surface-border space-y-5" aria-label="Skill mastery progress">
-          <h3 className="text-base font-semibold text-text-primary">Skill Map</h3>
-          <div className="space-y-3.5">
-            {progress.skillMastery.map((item) => (
-              <div key={item.skillName} className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-text-secondary">{item.skillName}</span>
-                  <span className="text-primary-400 font-mono font-semibold">{item.percentage}%</span>
+        {/* Left Column: Quick Stats & Skill Map */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {stats.map((stat, i) => (
+              <div key={i} className="glass-panel p-4 space-y-1">
+                <div className="flex items-center justify-between text-text-muted">
+                  <stat.icon className="w-4 h-4" />
+                  <span className="text-[10px] label-mono">{stat.label}</span>
                 </div>
-                <div className="w-full bg-surface-low h-2 rounded-full overflow-hidden border border-surface-border">
-                  <div 
-                    className="bg-gradient-to-r from-primary-500 to-purple-500 h-full rounded-full transition-all duration-700"
-                    style={{ width: `${item.percentage}%` }}
-                  />
-                </div>
+                <div className="text-2xl font-semibold text-text-primary font-mono">{stat.value}</div>
               </div>
             ))}
           </div>
-        </section>
+
+          <div className="glass-panel p-6 space-y-4">
+            <h3 className="text-base font-semibold text-text-primary">Skill Map</h3>
+            <div className="space-y-3">
+              {progress.skillMastery.map((item) => (
+                <div key={item.skillName} className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-medium text-text-secondary">{item.skillName}</span>
+                    <span className="text-primary font-mono font-semibold">{item.percentage}%</span>
+                  </div>
+                  <div className="w-full bg-surface-low h-2 rounded-full overflow-hidden border border-surface-border">
+                    <div
+                      className="bg-gradient-to-r from-primary-brand to-purple-500 h-full rounded-full transition-all duration-700"
+                      style={{ width: `${item.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Learning Activity Grid */}
         <section className="glass-panel p-5 sm:p-6 rounded-2xl border border-surface-border space-y-4" aria-label="Learning activity heatmap">
@@ -217,9 +211,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* ── Recommended Next ── */}
       <section className="glass-panel p-5 sm:p-6 rounded-2xl border border-surface-border space-y-4" aria-label="Recommended learning paths">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-primary-400" />
+          <TrendingUp className="w-4 h-4 text-primary" />
           <h3 className="text-base font-semibold text-text-primary">Recommended Next</h3>
-          <span className="label-mono text-primary-400 ml-1">Based on your history</span>
+          <span className="label-mono text-primary ml-1">Based on your history</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -230,10 +224,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               className="glass-card p-4 rounded-xl border border-surface-border text-left group"
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono font-semibold text-primary-400">{rec.match}% match</span>
-                <ArrowRight className="w-3.5 h-3.5 text-text-muted group-hover:text-primary-400 transition" />
+                <span className="text-xs font-mono font-semibold text-primary">{rec.match}% match</span>
+                <ArrowRight className="w-3.5 h-3.5 text-text-muted group-hover:text-primary transition" />
               </div>
-              <h4 className="text-sm font-semibold text-text-primary mb-1 group-hover:text-primary-300 transition">{rec.title}</h4>
+              <h4 className="text-sm font-semibold text-text-primary mb-1 group-hover:text-primary transition">{rec.title}</h4>
               <p className="text-[11px] text-text-muted">{rec.reason}</p>
             </button>
           ))}

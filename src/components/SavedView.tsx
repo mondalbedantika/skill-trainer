@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { Bookmark, Compass } from 'lucide-react';
-import type { Resource } from '../types';
+import { Bookmark } from 'lucide-react';
 import { ResourceCard } from './common/ResourceCard';
 import { EmptyState } from './common/EmptyState';
+import { useLearning } from '../context/LearningContext';
 
-interface SavedViewProps {
-  savedResources: Resource[];
-  onRemoveSave: (id: string) => void;
-  onStartOneHour: (skillName: string) => void;
-}
-
-export const SavedView: React.FC<SavedViewProps> = ({
-  savedResources,
-  onRemoveSave,
-  onStartOneHour
-}) => {
+export const SavedView: React.FC = () => {
+  const { savedResources, toggleSavedResource, startOneHour } = useLearning();
   const [activeTab, setActiveTab] = useState<'ALL' | 'Videos' | 'Courses'>('ALL');
 
   const filtered = savedResources.filter(r => {
@@ -29,7 +20,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
       {/* Header & Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <span className="label-mono text-primary-400 mb-1 block">Bookmarks & Library</span>
+          <span className="label-mono text-primary mb-1 block">Bookmarks & Library</span>
           <h1 className="text-3xl font-semibold text-text-primary tracking-tight">Saved</h1>
           <p className="text-xs text-text-muted mt-1">Bookmarked videos and courses for quick 1-hour sessions.</p>
         </div>
@@ -39,7 +30,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
           <button
             onClick={() => setActiveTab('ALL')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-              activeTab === 'ALL' ? 'bg-primary-600 text-text-primary' : 'text-text-muted hover:text-text-primary'
+              activeTab === 'ALL' ? 'bg-primary-brand text-text-primary' : 'text-text-muted hover:text-text-primary'
             }`}
           >
             All ({savedResources.length})
@@ -47,7 +38,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
           <button
             onClick={() => setActiveTab('Videos')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-              activeTab === 'Videos' ? 'bg-primary-600 text-text-primary' : 'text-text-muted hover:text-text-primary'
+              activeTab === 'Videos' ? 'bg-primary-brand text-text-primary' : 'text-text-muted hover:text-text-primary'
             }`}
           >
             Videos (YouTube)
@@ -55,7 +46,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
           <button
             onClick={() => setActiveTab('Courses')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-              activeTab === 'Courses' ? 'bg-primary-600 text-text-primary' : 'text-text-muted hover:text-text-primary'
+              activeTab === 'Courses' ? 'bg-primary-brand text-text-primary' : 'text-text-muted hover:text-text-primary'
             }`}
           >
             Courses (Coursera & Udemy)
@@ -79,8 +70,8 @@ export const SavedView: React.FC<SavedViewProps> = ({
               key={resource.id}
               resource={resource}
               isSaved={true}
-              onSaveResource={onRemoveSave}
-              onStartOneHour={onStartOneHour}
+              onSaveResource={toggleSavedResource}
+              onStartOneHour={startOneHour}
             />
           ))}
         </div>

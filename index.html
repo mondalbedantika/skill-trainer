@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>One-Hour Skill Trainer — AI Learning Aggregator</title>
-    <meta name="description" content="Discover the best technical learning resources across YouTube, Coursera, and Udemy — then master any skill in a focused 60-minute AI-curated session." />
-    <meta name="theme-color" content="#070a12" />
+    <title>HourForge — Forge a Skill in One Hour</title>
+    <meta name="description" content="Discover the best technical learning resources across YouTube, Coursera, and Udemy — then forge any skill in a focused 60-minute AI-curated session." />
+    <meta name="theme-color" content="#030303" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="One-Hour Skill Trainer" />
-    <meta property="og:description" content="AI-powered learning aggregator. Search, compare, and master technical skills in 60 minutes." />
+    <meta property="og:title" content="HourForge — Forge a Skill in One Hour" />
+    <meta property="og:description" content="AI-powered learning aggregator. Search, compare, and forge technical skills in 60 minutes." />
     <meta property="og:type" content="website" />
 
     <!-- Preconnect fonts -->
@@ -21,7 +21,8 @@
     <script>
       (function() {
         var t = localStorage.getItem('theme');
-        if (t === 'light') {
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (t === 'light' || (!t && !prefersDark)) {
           document.documentElement.classList.remove('dark');
         } else {
           document.documentElement.classList.add('dark');

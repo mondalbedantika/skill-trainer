@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, ExternalLink, Sparkles, Check, Clock, Star, Users, ShieldCheck, Award } from 'lucide-react';
+import { X, ExternalLink, Sparkles, Star } from 'lucide-react';
 import { Resource } from '../types';
+import { useDialogAccessibility } from './common/useDialogAccessibility';
 
 interface ResourceDetailModalProps {
   resource: Resource | null;
@@ -13,15 +14,16 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
   onClose,
   onStartOneHour
 }) => {
+  const dialogRef = useDialogAccessibility(Boolean(resource), onClose);
   if (!resource) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md animate-fadeIn">
       
-      <div className="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col justify-between">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="resource-detail-title" className="glass-panel w-full max-w-3xl rounded-3xl border border-surface-border shadow-2xl overflow-hidden max-h-[90vh] flex flex-col justify-between">
         
         {/* Modal Header */}
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-6 border-b border-surface-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="bg-indigo-950 text-indigo-300 border border-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded tracking-wider uppercase">
               {resource.provider} Intelligence
@@ -31,6 +33,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
 
           <button
             onClick={onClose}
+            aria-label="Close resource details"
             className="p-2 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-low transition"
           >
             <X className="w-5 h-5" />
@@ -41,12 +44,12 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
         <div className="p-6 space-y-6 overflow-y-auto">
           
           <div>
-            <h2 className="text-2xl font-bold text-text-primary mb-2">{resource.title}</h2>
+            <h2 id="resource-detail-title" className="text-2xl font-bold text-text-primary mb-2">{resource.title}</h2>
             <p className="text-sm text-text-secondary leading-relaxed">{resource.description}</p>
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-low border border-slate-800 p-4 rounded-2xl text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-low border border-surface-border p-4 rounded-2xl text-xs">
             <div>
               <div className="text-text-muted text-[10px] uppercase font-bold">Duration</div>
               <div className="font-bold text-text-primary mt-0.5">{resource.duration}</div>
@@ -70,7 +73,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
           </div>
 
           {/* AI Verdict Box */}
-          <div className="bg-gradient-to-tr from-slate-900 to-indigo-950/60 border border-indigo-800/60 p-5 rounded-2xl space-y-3">
+          <div className="bg-gradient-to-tr from-surface-low to-indigo-950/60 border border-indigo-800/60 p-5 rounded-2xl space-y-3">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-300" />
               <h3 className="font-bold text-text-primary text-sm">AI Recommendation Verdict</h3>
@@ -93,7 +96,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
               <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3">Course Modules & Syllabus</h3>
               <div className="space-y-2">
                 {resource.syllabus.map((module, idx) => (
-                  <div key={idx} className="p-3 bg-surface-low border border-slate-800 rounded-xl text-xs text-text-secondary">
+                  <div key={idx} className="p-3 bg-surface-low border border-surface-border rounded-xl text-xs text-text-secondary">
                     {module}
                   </div>
                 ))}
@@ -102,7 +105,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
           )}
 
           {/* Pricing Awareness */}
-          <div className="flex items-center justify-between text-xs text-text-muted pt-2 border-t border-slate-800">
+          <div className="flex items-center justify-between text-xs text-text-muted pt-2 border-t border-surface-border">
             <span>Price Model: <strong className="text-text-primary">{resource.price || 'Free'}</strong></span>
             <span className="italic">{resource.priceCheckDate || 'Price checked recently'}</span>
           </div>
@@ -110,7 +113,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-6 border-t border-slate-800 flex items-center justify-between gap-4">
+        <div className="p-6 border-t border-surface-border flex items-center justify-between gap-4">
           <button
             onClick={() => {
               onClose();
@@ -126,7 +129,7 @@ export const ResourceDetailModal: React.FC<ResourceDetailModalProps> = ({
             href={resource.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-surface-low hover:bg-slate-800 text-text-secondary border border-slate-800 font-semibold px-5 py-2.5 rounded-xl text-xs transition"
+            className="flex items-center gap-2 bg-surface-low hover:bg-surface-container-high text-text-secondary border border-surface-border font-semibold px-5 py-2.5 rounded-xl text-xs transition"
           >
             <span>View on {resource.provider}</span>
             <ExternalLink className="w-4 h-4" />

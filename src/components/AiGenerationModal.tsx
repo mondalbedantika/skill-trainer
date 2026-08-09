@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, CheckCircle2, Loader2, Zap } from 'lucide-react';
+import { Sparkles, CheckCircle2, Loader2 } from 'lucide-react';
 
 interface AiGenerationModalProps {
   skillName: string;
@@ -53,14 +53,14 @@ export const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
         {/* Glow Icon */}
         <div className="relative w-16 h-16 mx-auto">
           <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 rounded-2xl blur-lg opacity-60 animate-pulse" />
-          <div className="relative w-full h-full bg-background border border-primary-500/50 rounded-2xl flex items-center justify-center text-primary-400">
+          <div className="relative w-full h-full bg-background border border-primary/50 rounded-2xl flex items-center justify-center text-primary">
             <Sparkles className="w-8 h-8 text-amber-300 animate-spin" style={{ animationDuration: '4s' }} />
           </div>
         </div>
 
         {/* Title */}
         <div>
-          <span className="label-mono text-primary-400 block mb-1">AI Orchestration Engine</span>
+          <span className="label-mono text-primary block mb-1">AI Orchestration Engine</span>
           <h2 className="text-xl sm:text-2xl font-semibold text-text-primary">
             Building 60-Minute Session for <span className="gradient-accent-text font-bold">{skillName}</span>
           </h2>
@@ -70,7 +70,7 @@ export const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
         <div className="space-y-1.5 max-w-xs mx-auto">
           <div className="flex items-center justify-between text-[11px] font-mono text-text-muted">
             <span>Orchestrating...</span>
-            <span className="text-primary-400 font-bold">{progressPercentage}%</span>
+            <span className="text-primary font-bold">{progressPercentage}%</span>
           </div>
           <div className="w-full bg-surface-low h-2 rounded-full overflow-hidden border border-surface-border">
             <div 
@@ -96,7 +96,7 @@ export const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
               >
                 <div className="flex items-center gap-2">
                   {isCompleted && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
-                  {isCurrent && <Loader2 className="w-4 h-4 text-primary-400 animate-spin shrink-0" />}
+                  {isCurrent && <Loader2 className="w-4 h-4 text-primary animate-spin shrink-0" />}
                   {isPending && <div className="w-4 h-4 rounded-full border border-surface-border shrink-0" />}
                   <span className="truncate">{stage}</span>
                 </div>
