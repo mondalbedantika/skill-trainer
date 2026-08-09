@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Light Theme ── */
+    --color-background: #fcf8fb;
+    --color-on-background: #1c1b1d;
+    
+    --color-surface: #fcf8fb;
+    --color-surface-dim: #dcd9dc;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f6f2f5;
+    --color-surface-container: #f0edf0;
+    --color-surface-container-high: #eae7ea;
+    --color-surface-container-highest: #e5e1e4;
+    --color-surface-variant: #e5e1e4;
+    
+    --color-on-surface: #1c1b1d;
+    --color-on-surface-variant: #464554;
+    
+    --color-outline: #767586;
+    --color-outline-variant: #c7c4d7;
+    
+    /* Semantic aliases */
+    --color-surface-border: #eae7ea; 
+    --color-surface-low: #ffffff; /* Panels */
+    --color-surface-card: #ffffff; /* Cards */
+    --color-surface-high: #f6f2f5; /* Modals */
+    
+    --color-text-primary: #09090b; /* High contrast text */
+    --color-text-secondary: #464554;
+    --color-text-muted: #767586;
+    --color-text-disabled: #c7c4d7;
+    
+    /* Primary */
+    --color-primary: #4648d4;
+    --color-primary-container: #6063ee;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #fffbff;
+    --color-primary-brand: #6366f1; /* Brand spark */
+    
+    /* Shadows */
+    --shadow-level-2: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-ai-glow: inset 0 1px 2px rgba(99, 102, 241, 0.1);
+    
+    /* Borders */
+    --border-level-1: 1px solid #eae7ea;
+    --border-level-2: 0.5px solid #dcd9dc;
+    --border-level-hover: #c7c4d7;
+    
+    /* Buttons */
+    --btn-primary-bg: #6366f1;
+    --btn-primary-text: #ffffff;
+    --btn-primary-hover: #4f46e5;
+    
+    --btn-secondary-border: #a1a1aa;
+    --btn-secondary-text: #09090b;
+    --btn-secondary-hover-bg: #f6f2f5;
+  }
+
+  .dark {
+    /* ── Dark Theme ── */
+    --color-background: #030303;
+    --color-on-background: #e5e1e4;
+    
+    --color-surface: #131315;
+    --color-surface-dim: #131315;
+    --color-surface-container-lowest: #0e0e10;
+    --color-surface-container-low: #1c1b1d;
+    --color-surface-container: #201f22;
+    --color-surface-container-high: #2a2a2c;
+    --color-surface-container-highest: #353437;
+    --color-surface-variant: #353437;
+    
+    --color-on-surface: #e5e1e4;
+    --color-on-surface-variant: #c7c4d7;
+    
+    --color-outline: #908fa0;
+    --color-outline-variant: #464554;
+    
+    /* Semantic aliases */
+    --color-surface-border: #27272a; 
+    --color-surface-low: #09090b; /* Panels */
+    --color-surface-card: #0c0c0e; /* Cards */
+    --color-surface-high: #1c1b1d; /* Modals */
+    
+    --color-text-primary: #f4f4f5; 
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+    --color-text-disabled: #464554;
+    
+    /* Primary */
+    --color-primary: #c0c1ff;
+    --color-primary-container: #8083ff;
+    --color-on-primary: #1000a9;
+    --color-on-primary-container: #0d0096;
+    --color-primary-brand: #6366f1; /* Brand spark */
+    
+    /* Shadows */
+    --shadow-level-2: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --shadow-ai-glow: inset 0 1px 2px rgba(99, 102, 241, 0.2);
+    
+    /* Borders */
+    --border-level-1: 1px solid #27272a;
+    --border-level-2: 0.5px solid #27272a;
+    --border-level-hover: #3f3f46;
+    
+    /* Buttons */
+    --btn-primary-bg: #f4f4f5;
+    --btn-primary-text: #030303;
+    --btn-primary-hover: #ffffff;
+    
+    --btn-secondary-border: #27272a;
+    --btn-secondary-text: #f4f4f5;
+    --btn-secondary-hover-bg: #09090b;
+  }
+
+  body {
+    @apply bg-background text-text-primary font-sans antialiased min-h-screen;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-brand);
+    color: #ffffff;
+  }
+
+  /* Focus-visible ring for keyboard navigation */
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-primary-brand);
+  }
+}
+
+/* ── Custom Scrollbars ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* ── Surface Utility Classes ── */
+@layer components {
+
+  /* Level 1: Subtle elevation */
+  .glass-panel {
+    background: var(--color-surface-low);
+    border: var(--border-level-1);
+    @apply rounded-DEFAULT;
+  }
+
+  /* Level 2: Cards with 0.5px border and shadow */
+  .glass-card {
+    background: var(--color-surface-card);
+    border: var(--border-level-2);
+    box-shadow: var(--shadow-level-2);
+    @apply rounded-DEFAULT;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .glass-card:hover {
+    border-color: var(--border-level-hover);
+    box-shadow: var(--shadow-level-2), var(--shadow-ai-glow);
+    transform: translateY(-1px);
+  }
+
+  /* ── Gradient Text ── */
+  .gradient-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, var(--color-text-primary), var(--color-text-secondary), var(--color-primary-brand));
+  }
+
+  .gradient-accent-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, var(--color-primary-brand), var(--color-primary));
+  }
+
+  /* ── Platform Badges ── */
+  .badge-youtube, .badge-coursera, .badge-udemy {
+    @apply bg-transparent text-text-primary border border-surface-border font-mono font-semibold px-2 py-0.5 rounded-sm uppercase inline-flex items-center gap-1.5;
+  }
+
+  /* ── Score Badge ── */
+  .score-badge {
+    @apply bg-surface-low border border-surface-border text-primary font-mono font-bold px-2 py-0.5 rounded inline-flex items-center gap-1.5;
+  }
+
+  /* ── Label Mono (uppercase monospace metadata labels) ── */
+  .label-mono {
+    @apply font-mono text-[12px] font-medium leading-[1] tracking-[0.05em] uppercase text-text-muted;
+  }
+
+  /* ── Semantic Status Labels ── */
+  .status-success { @apply text-emerald-500 bg-transparent border border-emerald-500/50; }
+  .status-warning { @apply text-amber-500 bg-transparent border border-amber-500/50; }
+  .status-error { @apply text-rose-500 bg-transparent border border-rose-500/50; }
+  .status-info { @apply text-blue-500 bg-transparent border border-blue-500/50; }
+
+  /* ── Timeline Node States ── */
+  .timeline-node-locked { @apply bg-background border-surface-border text-text-disabled; }
+  .timeline-node-current {
+    @apply bg-surface-low shadow-md;
+    border-color: var(--color-primary-brand);
+    color: var(--color-primary-brand);
+  }
+  .timeline-node-completed { @apply bg-surface-low border-emerald-500 text-text-primary; }
+  .timeline-node-skipped { @apply bg-background border-surface-border text-text-muted; }
+
+  /* ── Button Base ── */
+  .btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    @apply flex items-center justify-center gap-2 font-semibold px-5 py-2.5 rounded transition-colors text-sm;
+  }
+  .btn-primary:hover {
+    background-color: var(--btn-primary-hover);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--btn-secondary-border);
+    color: var(--btn-secondary-text);
+    @apply flex items-center justify-center gap-2 hover:border-text-primary font-medium px-5 py-2.5 rounded transition-all text-sm;
+  }
+  .btn-secondary:hover {
+    background-color: var(--btn-secondary-hover-bg);
+  }
+
+  .btn-ai {
+    @apply flex items-center justify-center gap-2 bg-surface-low hover:bg-surface-high text-primary-brand font-medium px-5 py-2.5 rounded transition-all text-sm;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    box-shadow: inset 0 1px 4px rgba(99, 102, 241, 0.1);
+  }
+  .btn-ai:hover {
+    border-color: var(--color-primary-brand);
+  }
+
+  .btn-ghost {
+    @apply flex items-center justify-center gap-2 text-text-muted hover:text-text-primary hover:bg-surface-low font-medium px-3 py-1.5 rounded transition-all text-sm;
+  }
+
+  .input-base {
+    @apply w-full bg-surface-container border border-surface-border text-text-primary placeholder-text-muted text-sm px-4 py-2.5 rounded focus:outline-none transition-all;
+    caret-color: var(--color-primary-brand);
+  }
+  .input-base:focus {
+    border-color: var(--color-primary-brand);
+    box-shadow: 0 0 0 1px var(--color-primary-brand);
+  }
+
+  /* ── Shimmer Loading Skeleton ── */
+  .skeleton-box {
+    background: linear-gradient(90deg, var(--color-surface-container) 0%, var(--color-surface-border) 50%, var(--color-surface-container) 100%);
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded;
+  }
+
+  /* ── Chip / Tag ── */
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container border border-surface-border text-xs font-medium text-text-secondary hover:bg-surface-container-high transition-colors cursor-pointer;
+  }
+
+  .chip-active {
+    background-color: var(--color-surface-low);
+    border-color: var(--color-primary-brand);
+    color: var(--color-primary-brand);
+  }
+}
