@@ -10,6 +10,7 @@ import {
   Hammer
 } from 'lucide-react';
 import { UserProgress } from '../types';
+import { EmptyState } from './common/EmptyState';
 
 interface DashboardViewProps {
   progress: UserProgress;
@@ -43,7 +44,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     { label: 'Skills Completed', value: progress.skillsCompleted, icon: CheckCircle2, iconColor: 'text-emerald-400', change: null },
     { label: 'Learning Time', value: `${progress.hoursLearned}h`, icon: Clock, iconColor: 'text-cyan-400', change: null },
     { label: 'Avg Quiz Score', value: `${progress.averageQuizScore}%`, icon: Award, iconColor: 'text-amber-400', change: null },
-    { label: 'Challenges Done', value: progress.challengesCompleted ?? 7, icon: Hammer, iconColor: 'text-purple-400', change: null },
+    { label: 'Challenges Done', value: progress.challengesCompleted, icon: Hammer, iconColor: 'text-purple-400', change: null },
   ];
 
   // Recommendations
@@ -54,10 +55,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   ];
 
   // Heat grid for activity
-  const heatGridDays = Array.from({ length: 60 }).map((_, i) => ({
-    day: i,
-    count: i % 7 === 0 ? 3 : i % 5 === 0 ? 2 : i % 3 === 0 ? 1 : 0
-  }));
+  const heatGridDays = Array.from({ length: 60 }).map((_, day) => ({ day, count: progress.activityMap[day]?.count ?? 0 }));
+  const hasLearningHistory = progress.skillsCompleted > 0 || progress.hoursLearned > 0 || progress.activityMap.some((activity) => activity.count > 0);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8 animate-fadeIn">
@@ -154,7 +153,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="glass-panel p-6 space-y-4">
             <h3 className="text-base font-semibold text-text-primary">Skill Map</h3>
             <div className="space-y-3">
-              {progress.skillMastery.map((item) => (
+              {progress.skillMastery.length === 0 ? (
+                <p className="text-sm text-text-muted py-4">Start a learning path to see your skill mastery build here.</p>
+              ) : progress.skillMastery.map((item) => (
                 <div key={item.skillName} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-medium text-text-secondary">{item.skillName}</span>
@@ -213,10 +214,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-primary" />
           <h3 className="text-base font-semibold text-text-primary">Recommended Next</h3>
-          <span className="label-mono text-primary ml-1">Based on your history</span>
+          {hasLearningHistory && <span className="label-mono text-primary ml-1">Based on your history</span>}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {hasLearningHistory ? <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {recommendations.map((rec) => (
             <button
               key={rec.title}
@@ -231,7 +232,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <p className="text-[11px] text-text-muted">{rec.reason}</p>
             </button>
           ))}
-        </div>
+        </div> : <EmptyState icon={Sparkles} title="Your next path starts here" description="Search for a skill above and HourForge will build a focused learning path for you." />}
       </section>
 
     </div>

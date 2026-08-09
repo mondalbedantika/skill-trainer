@@ -181,6 +181,18 @@ export interface UserProgress {
   weakAreas: { topic: string; skill: string; needsReview: boolean }[];
 }
 
+export interface User {
+  id: string;
+  email: string;
+  createdAt: string;
+}
+
+export interface AuthSession {
+  userId: string;
+  token: string;
+  createdAt: string;
+}
+
 export interface InterviewQuestion {
   id: string;
   category: 'Conceptual' | 'Coding' | 'Debugging' | 'System Design' | 'Behavioral';

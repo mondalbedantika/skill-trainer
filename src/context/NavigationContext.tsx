@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-export type AppTab = 'explore' | 'resources' | 'skill' | 'aipaths' | 'onehour' | 'dashboard' | 'saved' | 'interview' | 'progress';
+export type AppTab = 'explore' | 'resources' | 'skill' | 'aipaths' | 'onehour' | 'dashboard' | 'saved' | 'interview' | 'progress' | 'signin' | 'signup' | 'forgot-password' | 'reset-password';
 
 interface NavigationContextValue {
   activeTab: AppTab;
@@ -11,6 +11,8 @@ interface NavigationContextValue {
   setIsSearchOpen: (open: boolean) => void;
   isAssistantOpen: boolean;
   setIsAssistantOpen: (open: boolean) => void;
+  resetToken: string;
+  setResetToken: (token: string) => void;
 }
 
 const NavigationContext = createContext<NavigationContextValue | undefined>(undefined);
@@ -20,7 +22,8 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
-  return <NavigationContext.Provider value={{ activeTab, setActiveTab, isOnboardingOpen, setIsOnboardingOpen, isSearchOpen, setIsSearchOpen, isAssistantOpen, setIsAssistantOpen }}>{children}</NavigationContext.Provider>;
+  const [resetToken, setResetToken] = useState('');
+  return <NavigationContext.Provider value={{ activeTab, setActiveTab, isOnboardingOpen, setIsOnboardingOpen, isSearchOpen, setIsSearchOpen, isAssistantOpen, setIsAssistantOpen, resetToken, setResetToken }}>{children}</NavigationContext.Provider>;
 }
 
 export function useNavigation() {

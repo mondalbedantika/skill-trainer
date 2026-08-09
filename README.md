@@ -24,6 +24,7 @@
 | 🧠 **Learning-fit scores** | Clear recommendation signals and explanations instead of a wall of course links. |
 | 🗺️ **Skill paths** | Beginner-to-advanced routes with goal match, difficulty progression, and hands-on coverage. |
 | 🔖 **Saved library** | Keep the best videos and courses handy for the next learning block. |
+| 🔐 **Account flow** | Create an account, sign in, and reset a password through an accessible local mock-auth flow. |
 | 🎤 **Interview prep** | Practice conceptual, coding, debugging, system-design, and behavioral questions. |
 | 🌗 **Polished experience** | Responsive layouts, dark/light themes, keyboard-friendly dialogs, global search, onboarding, loading, and empty states. |
 
@@ -94,6 +95,7 @@ src/
 
 - **NavigationContext** owns the active view and global overlay state.
 - **LearningContext** owns resources, saved items, preferences, selected resource details, and one-hour session generation.
+- **AuthContext** exposes the current user and mock authentication actions; guests can browse, while saved resources, sessions, dashboard, and progress are account-only.
 - Feature screens such as navigation, discovery, and saved resources consume this shared state directly—keeping `App.tsx` focused on composition.
 
 ### Resource intelligence
@@ -106,7 +108,7 @@ HourForge is intentionally a front-end product prototype:
 
 - Resource metadata, prices, ratings, and progress are **demo data**.
 - The AI-style experience is powered by local deterministic logic, not a hosted model.
-- Saved items and preferences are not yet persisted between devices.
+- Authentication is a **client-side mock** using browser storage. It is useful for prototyping only and must be replaced with a real backend before handling real user data.
 - Provider adapters define the integration shape but do not call external course APIs.
 
 This makes the project easy to run, explore, and extend without credentials or a backend.
@@ -114,7 +116,7 @@ This makes the project easy to run, explore, and extend without credentials or a
 ## 🔮 Natural next steps
 
 1. Connect provider adapters through a secure backend or serverless API.
-2. Add authentication and persistence for goals, bookmarks, and completed sessions.
+2. Add a real authentication backend and persistence for goals, bookmarks, and completed sessions.
 3. Replace deterministic curation with an evaluated recommendation service.
 4. Add end-to-end coverage for search, session generation, and accessibility flows.
 

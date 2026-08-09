@@ -3,6 +3,7 @@ import type { OneHourSession, Resource, SkillOverview, UserGoals, UserProgress }
 import { INITIAL_RESOURCES, MOCK_SKILLS } from '../services/mockData';
 import { AiEngine } from '../services/aiEngine';
 import { useNavigation } from './NavigationContext';
+import { useAuth } from './AuthContext';
 
 interface LearningContextValue {
   resources: Resource[]; activeSkill: SkillOverview; activeSession: OneHourSession | null;
@@ -12,16 +13,17 @@ interface LearningContextValue {
   search: (query: string) => void; startOneHour: (skillName?: string) => void; completeGeneration: () => void; toggleSavedResource: (id: string) => void;
 }
 const LearningContext = createContext<LearningContextValue | undefined>(undefined);
-const initialProgress: UserProgress = { skillsExplored: 14, skillsCompleted: 8, hoursLearned: 12.4, averageQuizScore: 89, challengesCompleted: 7, skillMastery: [{ skillName: 'Python', percentage: 78 }, { skillName: 'React Hooks', percentage: 42 }, { skillName: 'SQL', percentage: 91 }, { skillName: 'Machine Learning', percentage: 26 }], activeSession: { skillName: 'React Hooks', stageIndex: 0, completionPercentage: 42, minutesRemaining: 18, activeStageTitle: 'LEARN' }, activityMap: [], savedResourceIds: ['yt-react-hooks-1'], completedSessionIds: [], weakAreas: [] };
+const initialProgress: UserProgress = { skillsExplored: 0, skillsCompleted: 0, hoursLearned: 0, averageQuizScore: 0, challengesCompleted: 0, skillMastery: [], activityMap: [], savedResourceIds: [], completedSessionIds: [], weakAreas: [] };
 
 export function LearningProvider({ children }: { children: React.ReactNode }) {
   const { setActiveTab } = useNavigation();
+  const { user } = useAuth();
   const [resources, setResources] = useState<Resource[]>(INITIAL_RESOURCES);
   const [activeSkill, setActiveSkill] = useState<SkillOverview>(MOCK_SKILLS[0]);
   const [activeSession, setActiveSession] = useState<OneHourSession | null>(null);
   const [selectedDetailResource, setSelectedDetailResource] = useState<Resource | null>(null);
-  const [savedResourceIds, setSavedResourceIds] = useState<string[]>(['yt-react-hooks-1']);
-  const [userGoals, setUserGoals] = useState<UserGoals>({ primaryGoal: 'Build Projects', currentLevel: 'Beginner', availableTime: '1 hour', hasOnboarded: true });
+  const [savedResourceIds, setSavedResourceIds] = useState<string[]>([]);
+  const [userGoals, setUserGoals] = useState<UserGoals>({ primaryGoal: 'Explore a New Skill', currentLevel: 'Beginner', availableTime: '1 hour', hasOnboarded: false });
   const [isGeneratingPath, setIsGeneratingPath] = useState(false);
   const [generatingSkillTarget, setGeneratingSkillTarget] = useState('');
   const search = (query: string) => {
@@ -46,9 +48,9 @@ export function LearningProvider({ children }: { children: React.ReactNode }) {
     });
     setActiveTab('skill');
   };
-  const startOneHour = (skillName = 'React Hooks') => { setGeneratingSkillTarget(skillName); setIsGeneratingPath(true); };
+  const startOneHour = (skillName = 'React Hooks') => { if (!user) { setActiveTab('signin'); return; } setGeneratingSkillTarget(skillName); setIsGeneratingPath(true); };
   const completeGeneration = () => { setIsGeneratingPath(false); setActiveSession(AiEngine.buildOneHourSession(generatingSkillTarget || 'React Hooks', userGoals.primaryGoal)); setActiveTab('onehour'); };
-  const toggleSavedResource = (id: string) => setSavedResourceIds((ids) => ids.includes(id) ? ids.filter((item) => item !== id) : [...ids, id]);
+  const toggleSavedResource = (id: string) => { if (!user) { setActiveTab('signin'); return; } setSavedResourceIds((ids) => ids.includes(id) ? ids.filter((item) => item !== id) : [...ids, id]); };
   const savedResources = useMemo(() => resources.filter((resource) => savedResourceIds.includes(resource.id)), [resources, savedResourceIds]);
   return <LearningContext.Provider value={{ resources, activeSkill, activeSession, selectedDetailResource, setSelectedDetailResource, savedResourceIds, savedResources, userGoals, setUserGoals, userProgress: initialProgress, isGeneratingPath, generatingSkillTarget, search, startOneHour, completeGeneration, toggleSavedResource }}>{children}</LearningContext.Provider>;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
 import type { UserProgress } from '../types';
+import { EmptyState } from './common/EmptyState';
 
 interface ProgressViewProps {
   progress: UserProgress;
@@ -59,7 +60,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
         </div>
 
         <div className="glass-panel p-5 rounded-2xl border border-surface-border space-y-1">
-          <div className="text-3xl font-bold font-mono text-purple-400">{progress.challengesCompleted ?? 7}</div>
+          <div className="text-3xl font-bold font-mono text-purple-400">{progress.challengesCompleted}</div>
           <div className="label-mono">Challenges Completed</div>
         </div>
       </div>
@@ -72,7 +73,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
         </div>
 
         <div className="space-y-4">
-          {progress.skillMastery.map((item) => (
+          {progress.skillMastery.length === 0 ? (
+            <p className="text-sm text-text-muted py-4">Complete learning sessions to build your mastery map.</p>
+          ) : progress.skillMastery.map((item) => (
             <div key={item.skillName} className="space-y-2">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-text-primary font-medium">{item.skillName}</span>
@@ -90,7 +93,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
       </div>
 
       {/* Recommendation Engine UI */}
-      <div className="glass-panel p-6 rounded-2xl border border-surface-border space-y-6">
+      {progress.skillsCompleted > 0 ? <div className="glass-panel p-6 rounded-2xl border border-surface-border space-y-6">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-primary" />
           <h2 className="text-lg font-semibold text-text-primary">Recommended Next</h2>
@@ -125,7 +128,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ progress, onStartSki
             </div>
           ))}
         </div>
-      </div>
+      </div> : <EmptyState icon={Sparkles} title="No recommendations yet" description="Finish a learning session and HourForge will use that activity to suggest what to learn next." />}
 
     </div>
   );

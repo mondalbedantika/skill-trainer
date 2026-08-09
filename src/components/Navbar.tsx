@@ -18,6 +18,7 @@ import {
 import { APP_NAME } from '../constants/app';
 import { useNavigation, type AppTab } from '../context/NavigationContext';
 import { useLearning } from '../context/LearningContext';
+import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS: { id: AppTab; label: string; icon: React.ElementType; color: string }[] = [
   { id: 'explore', label: 'Home', icon: Compass, color: 'text-cyan-400' },
@@ -35,6 +36,7 @@ const SECONDARY_NAV: { id: AppTab; label: string; icon: React.ElementType; color
 export const Navbar: React.FC = () => {
   const { activeTab, setActiveTab, setIsOnboardingOpen, setIsSearchOpen } = useNavigation();
   const { userGoals, startOneHour } = useLearning();
+  const { user, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   
   const [isDarkMode, setIsDarkMode] = React.useState(() => {
@@ -177,6 +179,8 @@ export const Navbar: React.FC = () => {
               <span className="hidden sm:inline">1-Hour Path</span>
             </div>
           </button>
+
+          {user ? <button onClick={() => { void signOut(); setActiveTab('explore'); }} className="hidden lg:inline-flex text-xs text-text-secondary hover:text-text-primary" aria-label="Sign out">Sign out</button> : <button onClick={() => setActiveTab('signin')} className="hidden lg:inline-flex btn-secondary py-1.5 px-3 text-xs">Sign in</button>}
 
           {/* Mobile menu toggle */}
           <button
