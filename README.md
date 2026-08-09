@@ -13,8 +13,6 @@
   <img src="https://img.shields.io/badge/Tailwind-CSS-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
 </p>
 
-![HourForge interface](src/assets/hero.png)
-
 > **🎯 The idea:** less browsing, more progress. HourForge helps learners find quality technical resources and turns them into a structured, hands-on 60-minute learning session.
 
 ## ✨ What makes it useful
